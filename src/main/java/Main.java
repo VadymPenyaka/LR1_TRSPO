@@ -25,7 +25,7 @@ public class Main {
             new Point(1, 2),
             new Point(2, 3),
             new Point(3, 1)
-    );;
+    );
     private static List<Point> pointsFalse2 = List.of(
             new Point(4, 3),
             new Point(5, 2),
@@ -35,8 +35,8 @@ public class Main {
     private static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-//        InputOutputFromFile.inputDataToFile(PointsGenerator.generatePoints(1000), "points1.txt");
-//        InputOutputFromFile.inputDataToFile(PointsGenerator.generatePoints(1000), "points2.txt");
+//        InputOutputFromFile.inputDataToFile(PointsGenerator.generatePoints(5000000), "points1.txt");
+//        InputOutputFromFile.inputDataToFile(PointsGenerator.generatePoints(5000000), "points2.txt");
         chooseAndPerform();
 
     }
@@ -62,7 +62,7 @@ public class Main {
 
     public static void performAndGetThreadsExecutionTimeWithRandomData () {
         System.out.println("Введіть кількість точок:");
-        int numberOfPoints = scanner.nextInt();
+        long numberOfPoints = scanner.nextLong();
         if (numberOfPoints>3)
             performOperations(PointsGenerator.generatePoints(numberOfPoints), PointsGenerator.generatePoints(numberOfPoints));
         else
@@ -81,20 +81,18 @@ public class Main {
 
         taskMultyThreadExecutor.run();
 
+
         Map<Integer, Long> numberOfThreadsAndExecutionTimeMap = new HashMap<>();
 
-        for (int i=2; i<30; i++) {
-            long start = System.nanoTime();
-            TaskMultyThreadExecutor taskMultyThreadExecutor1 = new TaskMultyThreadExecutor(pointsFalse1, pointsFalse2, i);
-            taskMultyThreadExecutor1.run();
-            numberOfThreadsAndExecutionTimeMap.put(i, System.nanoTime()-start);
+
+        for (int i=1; i<10; i++) {
+            long start = System.currentTimeMillis();
+            TaskMultyThreadExecutor taskExecutor = new TaskMultyThreadExecutor(points1, points2, i);
+            taskMultyThreadExecutor.run();
+            numberOfThreadsAndExecutionTimeMap.put(i, (System.currentTimeMillis())-start);
         }
-        numberOfThreadsAndExecutionTimeMap.put(1, Long.valueOf(1));
 
         new HistogramGenerator (numberOfThreadsAndExecutionTimeMap);
     }
-
-
-
 
 }

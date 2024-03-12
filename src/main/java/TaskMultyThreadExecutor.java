@@ -16,7 +16,7 @@ class SeparateCheck implements Callable<Boolean>{
     @Override
     public Boolean call() {
         boolean canSeparate = canSeparate(points1, points2);
-        System.out.println(canSeparate);
+//        System.out.println(canSeparate);
         return canSeparate;
     }
 
